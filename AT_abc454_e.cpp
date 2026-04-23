@@ -5,7 +5,7 @@ ll n,a,b;
 string ans;
 void solve(){
     cin>>n>>a>>b;
-    if(n%2==1&&(a+b)%2==0){
+    if(n%2==1||(a+b)%2==0){
         cout<<"No\n";
         return;
     }

@@ -1,46 +1,86 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 typedef long long ll;
 using namespace std;
-ll n,a,b;vector<pair<ll,ll>>p;
-void add(ll i,ll j){
-    if(i==a&&j==b)return;
-    p.push_back({i,j});
-}
+ll n,a,b;
+string ans;
 void solve(){
-    
     cin>>n>>a>>b;
-    if((n&1)&&((a+b)&1)==0){
-        cout<<"No"<<'\n';
+    if(n%2==1&&(a+b)%2==0){
+        cout<<"No\n";
         return;
     }
-    p.clear();
-    for(ll i=1;i<=n;i++){
-        if(i&1==0)
-            for(ll j=n;j>0;j--)
-                add(i,j);
-        else 
-            for(ll j=1;j<=n;j++)
-                add(i,j);
+    ll flag=false;
+    if(a%2==1){
+        swap(a,b);
+        flag=true;
     }
     cout<<"Yes\n";
-    for(ll i=1;i<p.size();i++){
-        auto [x,y]=p[i];
-        auto [px,py]=p[i-1];
-        if(x-px==1)
-            cout<<"D";
-        else if(x-px==-1)
-            cout<<"U";
-        else if(y-py==1)
-            cout<<"R";
-        else if(y-py==-1)
-            cout<<"L";
+    char l,r,d,u;
+    if(!flag){
+        l='L',r='R',d='D',u='U';
     }
-    cout<<'\n';
+    else{
+        l='U',r='D',d='R',u='L';
+    }
+    for(ll i=1;i<=a-2;i+=2){
+        for(ll j=2;j<=n;j++){
+            ans+=r;
+            //cout<<1<<"\n";
+        }
+        ans+=d;
+        i--;
+        for(ll j=2;j<=n;j++){
+            ans+=l;
+            //cout<<2<<"\n";
+        }
+        ans+=d;
+        i++;
+    }
+    //ans+=" ";
+    for(ll i=1;i<=b-1;i+=2){
+        ans+=d;
+        ans+=r;
+        ans+=u;
+        ans+=r;
+    }
+    //if()
+    ans+=r;
+    ans+=d;
+    for(ll i=b+1;i<n;i+=2){
+        
+        ans+=r;
+        ans+=u;
+        ans+=r;
+        ans+=d;
+    }
+    //ans+=" ";
+    for(ll i=a+1;i<n;i++){
+        if(i==a+1){
+            ans+=d;
+        }
+        if(i%2==1){
+            for(ll j=2;j<=n;j++){
+                ans+=l;
+            }
+            ans+=d;
+        }else{
+            for(ll j=2;j<=n;j++){
+                ans+=r;
+            }
+            ans+=d;
+        }
+    }
+    for(ll i=2;i<=(n-a==0?0:n);i++){
+        ans+=r;
+    }
+    cout<<ans<<"\n";
+    ans="";
 }
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);
-    ll T;
-    cin>>T;
-    while(T--)solve();
+    ll T; cin>>T;
+    while(T--){
+        solve();
+    }
     return 0;
 }
